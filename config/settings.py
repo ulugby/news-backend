@@ -26,12 +26,27 @@ SECRET_KEY = "django-insecure-3ucj*t0^d+t0cw0im9&s6n!rk0lgnpo(i$q*^ist&397vm4vp0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# settings.py
+# CSRF_TRUSTED_ORIGINS = [
+#     'https://a80b-188-113-207-218.ngrok-free.app',  # Ngrok URL
+# ]
 
 
-# Application definition
+# ALLOWED_HOSTS = [
+#     '127.0.0.1',  # Mahalliy host
+#     'localhost',  # Mahalliy host
+#     'a80b-188-113-207-218.ngrok-free.app',  # Ngrok URL
+# ]
+# # Application definition
+
+# # settings.py
+# if DEBUG:
+#     CSRF_TRUSTED_ORIGINS += [f"https://a80b-188-113-207-218.ngrok-free.app"]
+#     ALLOWED_HOSTS += 'a80b-188-113-207-218.ngrok-free.app'
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
+    'jazzmin',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -43,6 +58,9 @@ INSTALLED_APPS = [
     'main',
 
     'drf_yasg',
+    'ckeditor',
+    'ckeditor_uploader',
+
 ]
 
 MIDDLEWARE = [
@@ -127,7 +145,8 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATICFILES_DIRS = [BASE_DIR / "static"]  # Statik fayllarning joylashuvi
+STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -136,3 +155,35 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+JAZZMIN_SETTINGS = {
+    "site_title": "My Project Admin",
+    "site_header": "My Project Administration",
+    "welcome_sign": "Welcome to My Project Admin Panel",
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "hide_apps": [],
+    "hide_models": [],
+    "order_with_respect_to": ["auth", "news", "users"],
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "news.News": "fas fa-newspaper",
+    },
+    "changeform_format": "horizontal_tabs",
+    "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
+    "related_modal_active": True,
+}
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+
+# SECURE_SSL_REDIRECT = True
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
+# SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+SECURE_SSL_REDIRECT = False

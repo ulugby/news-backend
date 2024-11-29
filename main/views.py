@@ -2,9 +2,9 @@ from django.shortcuts import render
 
 # Create your views here.
 from rest_framework import generics
-from .models import News
+from .models import News, NewsView
 from .serializers import NewsSerializer
-
+from datetime import timezone, datetime
 
 
 class NewsListAPIView(generics.ListAPIView):
@@ -14,6 +14,7 @@ class NewsListAPIView(generics.ListAPIView):
 class NewsDetailAPIView(generics.RetrieveAPIView):
     queryset = News.objects.all()
     serializer_class = NewsSerializer
+    lookup_field = 'slug'
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -22,7 +23,7 @@ class NewsDetailAPIView(generics.RetrieveAPIView):
         if not NewsView.objects.filter(news=instance, ip_address=client_ip).exists():
             instance.views += 1
             instance.save()
-            NewsView.objects.create(news=instance, ip_address=client_ip, viewed_at=timezone.now())
+            NewsView.objects.create(news=instance, ip_address=client_ip, viewed_at=datetime.now())
 
         return super().retrieve(request, *args, **kwargs)
 

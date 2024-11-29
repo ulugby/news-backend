@@ -3,5 +3,5 @@ from .views import NewsListAPIView, NewsDetailAPIView
 
 urlpatterns = [
     path('news/', NewsListAPIView.as_view(), name='news-list'),
-    path('news/<int:pk>/', NewsDetailAPIView.as_view(), name='news-detail'),
+    path('news/<slug:slug>/', NewsDetailAPIView.as_view(), name='news_detail'),
 ]
